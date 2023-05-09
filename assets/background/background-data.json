@@ -1,0 +1,9 @@
+{
+    "background": [
+        { "src": "layer-1.png", "speed": 0.2 },
+        { "src": "layer-2.png", "speed": 0.4 },
+        { "src": "layer-3.png", "speed": 0.6 },
+        { "src": "layer-4.png", "speed": 0.8 },
+        { "src": "layer-5.png", "speed": 1 }
+    ]
+}
