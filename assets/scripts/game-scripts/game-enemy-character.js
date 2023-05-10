@@ -14,4 +14,3 @@ class GameEnemy extends PolskieCanvasAssetManager {
         console.log(`${this.constructor.name}#${GameEnemy.instanceCount} test`);
     }
   }
-  

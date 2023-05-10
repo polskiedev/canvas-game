@@ -11,4 +11,3 @@ class GamePlayer extends PolskieCanvasAssetManager {
     this.printLog(`Added ${this.name}#${GamePlayer.instanceCount} on the game.`);
   }
 }
-  

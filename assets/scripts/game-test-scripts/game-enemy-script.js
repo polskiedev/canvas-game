@@ -6,41 +6,41 @@ document.addEventListener('DOMContentLoaded', function() {
     const ctx = canvas.getContext('2d');
     const CANVAS_WIDTH = canvas.width = 600;
     const CANVAS_HEIGHT = canvas.height = 600;
-    const GameCharacters = {};
+    const numberOfEnemies = 100;
+    const enemiesArray = [];
 
     let gameFrame = 0;
     let staggerFrames = 5;
-
-
-    async function loadGameData() {
-        let characterData = {
-            "main": {
-                "url": "/assets/characters/shadow-dog"
-            }
-        };
-      
-        // Load the character data for each character
-        for (const characterName in characterData) {
-
+    let gameMeta = {
+        canvas: {
+            width: CANVAS_WIDTH,
+            height: CANVAS_HEIGHT,
+            ctx: ctx
         }
+    };
+    // async function loadGameData() {
+    //     // animate();
+    // }
 
-        animate();
+    // loadGameData();
+
+    for(let i = 0; i < numberOfEnemies; i++) {
+        let enemy = new GameEnemy('Enemy'+i);
+        enemy.setGameMeta(gameMeta);
+        enemiesArray.push(enemy);
     }
-      
-
-    loadGameData();
 
     animate = function() {
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-        let mainChar = GameCharacters["main"];
-        let position = Math.floor(gameFrame/ staggerFrames) % mainChar.spriteAnimations[mainChar.characterState].loc.length;
-        let frameX = mainChar.spriteWidth * position;
-        let frameY = mainChar.spriteAnimations[mainChar.characterState].loc[position].y;
-
-        ctx.drawImage(mainChar.getImage(), frameX, frameY, mainChar.spriteWidth, mainChar.spriteHeight, 0 ,0 , mainChar.spriteWidth, mainChar.spriteHeight);
         gameFrame++;
- 
+
+        enemiesArray.forEach(enemy => {
+            enemy.update();
+            enemy.setGameFrame(gameFrame);
+            enemy.draw();
+        });
+        
         requestAnimationFrame(animate);
     }
+    animate();
 });

@@ -97,4 +97,3 @@ class GameBackground {
     console.log(`${this.constructor.name} test`);
   }
 }
-  
