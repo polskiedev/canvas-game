@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {    
     console.log('The page has finished loading!');
     //https://www.youtube.com/watch?v=GFO_txvwK_c
+    //https://opengameart.org/content/magic-sfx-sample
     //Prep canvas
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');

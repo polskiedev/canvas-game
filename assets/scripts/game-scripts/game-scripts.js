@@ -63,17 +63,21 @@ document.addEventListener('DOMContentLoaded', function() {
             "index": 3
         }
     ]);
+    player.setAdjustY(110);
     player.setState('run');
     GameObjects.push(player);
-
+    /////////////////////
     // console.log(parallaxBG.DrawData);
     animate = function() {
         ctx.clearRect(0, 0, GameMeta.canvas.width, GameMeta.canvas.width);
         
-        GameObjects.forEach(obj => {
+        GameObjects.forEach((obj, index) => {
             obj.setGameFrame(GameMeta.gameFrame);
             obj.update();
             obj.draw();
+            if(obj.constructor.name == 'GameEffects' && obj.getMetaData().loop == 1) {
+                GameObjects.splice(index, 1);
+            }
         });
 
         GameMeta.gameFrame++;
@@ -82,4 +86,30 @@ document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(animate);
     }
     animate();
+
+    window.addEventListener('click', function(e) {
+        let canvasPosition = canvas.getBoundingClientRect();
+        let positionX = e.clientX - canvasPosition.left;
+        let positionY = e.clientY - canvasPosition.top;
+        let explode = new GameEffects('explosion');
+
+        explode.setGameMeta(GameMeta);
+        explode.setAssetData({
+            width: 200, 
+            height: 179, 
+            dir: "/assets/effects",
+            file: "boom.png",
+            // scale: 1
+        });
+        explode.setAnimationStates([
+            {
+                "name": "explode",
+                "frames": 5,
+                "index": 0
+            }
+        ]);
+        explode.setXY(positionX, positionY);
+        explode.setState('explode');
+        GameObjects.push(explode);
+    });    
 });

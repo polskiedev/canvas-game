@@ -6,6 +6,7 @@ class PolskieCanvasAssetManager {
         this.name = characterName ?? this.constructor.name;
         this.logger = false;
         this.initialize();
+        this.after_initialize();
         this.printLog(`Added ${this.name}#${PolskieCanvasAssetManager.instanceCount} on the game.`);
     }
 
@@ -19,7 +20,10 @@ class PolskieCanvasAssetManager {
         this.AssetData = {};
         this.MetaData = {
             animationStates: [],
-            state: "idle"
+            state: "idle", 
+            position: {x: 0, y: 0, ax: 0, ay: 0},
+            loop: 0,
+            frame: 0
         };
         this.DrawData = {
             sx: 0,
@@ -33,8 +37,39 @@ class PolskieCanvasAssetManager {
         };
     }
 
+    after_initialize() {
+    }
+
     setGameMeta(data) {
         this.GameMeta = data;
+    }
+
+    setX(x) {
+        let scale = this.AssetData.scale ?? 1;
+        this.MetaData.position.x = x - ((this.AssetData.width * scale) / 2);
+    }
+
+    setY(y) {
+        let scale = this.AssetData.scale ?? 1;    
+        this.MetaData.position.y = y - ((this.AssetData.height * scale) / 2);
+    }
+    
+    setXY(x, y) {
+        this.setX(x);
+        this.setY(y);
+    }
+
+    setAdjustX(x) {
+        this.MetaData.position.ax = x;
+    }
+
+    setAdjustY(y) {
+        this.MetaData.position.ay = y;
+    }
+
+    setAdjustXY(x, y) {
+        this.setAdjustX(x);
+        this.setAdjustY(y);
     }
 
     setAssetData(data) {
@@ -89,7 +124,7 @@ class PolskieCanvasAssetManager {
                 frames.loc.push({x: posX, y: posY});
             }
 
-            this.MetaData.animationStates[state.name] = frames;
+            this.MetaData.animationStates[state.name] = {...state, ...frames};
         });
     }
 
@@ -112,7 +147,18 @@ class PolskieCanvasAssetManager {
         let dWidth = this.AssetData.width * scale;
         let dHeight = this.AssetData.height * scale;
 
-        dy -= 120;//adjustments?
+        //Todo
+        // dx = this.MetaData.position.x;
+        // dy = this.MetaData.position.y;
+
+        dx = dx + this.MetaData.position.ax;
+        dy = dx + this.MetaData.position.ay;
+
+        this.MetaData.frame++;
+        if(obj.frames == this.MetaData.frame) {
+            this.MetaData.frame = 0;
+            this.MetaData.loop++;
+        }
 
         this.DrawData = {sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight};
     }
