@@ -12,8 +12,6 @@ class GameEffects extends PolskieCanvasAssetManager {
 
     after_initialize() {
         this.timer = 0;
-        this.sound = new Audio();
-        this.sound.src = './assets/sounds/boom.wav';
     }
 
     update() {
@@ -37,7 +35,7 @@ class GameEffects extends PolskieCanvasAssetManager {
         this.timer++;
         if(this.timer % 5 === 0) {
             if(this.MetaData.frame == 0) {
-                this.sound.play();
+                this.playSound('onload');
             }
 
             this.MetaData.frame++;

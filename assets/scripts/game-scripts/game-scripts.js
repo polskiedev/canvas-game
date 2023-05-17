@@ -65,6 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
     ]);
     player.setAdjustY(110);
     player.setState('run');
+    player.setSoundMetaData([
+        {
+            "name": "onload",
+            "src": "/assets/sounds/boom.wav",
+            "volume": 0.08
+        }
+    ])
     GameObjects.push(player);
     /////////////////////
     // console.log(parallaxBG.DrawData);
@@ -106,6 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 "name": "explode",
                 "frames": 5,
                 "index": 0
+            }
+        ]);
+        explode.setSoundMetaData([
+            {
+                "name": "onload",
+                "src": "/assets/sounds/boom.wav",
+                "volume": 0.08
             }
         ]);
         explode.setXY(positionX, positionY);

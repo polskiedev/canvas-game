@@ -23,7 +23,8 @@ class PolskieCanvasAssetManager {
             state: "idle", 
             position: {x: 0, y: 0, ax: 0, ay: 0},
             loop: 0,
-            frame: 0
+            frame: 0,
+            sound: {}
         };
         this.DrawData = {
             sx: 0,
@@ -89,6 +90,22 @@ class PolskieCanvasAssetManager {
 
     setMetaData(data) {
         this.MetaData = data;
+    }
+
+    setSoundMetaData(data) {
+        data.forEach(state => {
+            let audio = new Audio();
+            audio.src = state.src;
+            audio.volume = state.volume;
+
+            this.MetaData.sound[state.name] = audio;
+        });
+    }
+
+    playSound(state) {
+        if(this.MetaData.sound[state]) {
+            this.MetaData.sound[state].play();
+        }
     }
 
     getMetaData() {
