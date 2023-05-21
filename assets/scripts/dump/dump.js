@@ -56,3 +56,8 @@
     // ]);
 
     // dog.animate();
+
+
+       // ctx.font = "48px serif";
+        // ctx.fillText("Hello world", 10, 50);
+        // this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
